@@ -1,8 +1,11 @@
 import 'dart:html';
+import 'dart:ui';
 
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +19,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
-        title: 'Namer App',
+        title: 'Journey',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber, secondary: Colors.blueGrey),
@@ -71,34 +74,41 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        double size = constraints.maxHeight * 0.11;
+        
         return Scaffold(
-          body: Row(
+          body: Stack(
             children: [
-              SafeArea(
-                child: NavigationRail(
-                  extended: constraints.maxWidth >= 600,
-                  destinations: [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.home),
-                      label: Text('Home'),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 35.0, right: 30.0, bottom: 50.0),
+                  child: ShaderMask(
+                    blendMode: BlendMode.srcIn,
+                    shaderCallback: (Rect bounds) {
+                      return LinearGradient(
+                        colors: [Color(0xFFf08080), Color(0xfffec89a), Color(0xffffc8dd), Color(0xFFffef9f), Color(0xffB9FBC0), Color(0xFF8EECF5), Color(0xffCFBAF0)], // Replace with your desired colors
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomLeft,
+                      ).createShader(bounds);
+                    },
+                    child: TextAnimator(
+                      'Hey, how are you doing today?',
+                      initialDelay: const Duration(seconds: 1),
+                      characterDelay: const Duration(milliseconds: 60),
+                      style: TextStyle(
+                        fontSize: size,
+                      ),
                     ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.favorite),
-                      label: Text('Favorites'),
-                    ),
-                  ],
-                  selectedIndex: selectedIndex,
-                  onDestinationSelected: (value) {
-                    setState(() {
-                      selectedIndex = value;
-                    });
-                  },
+                  )
                 ),
               ),
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: page,
+
+              //make this an IconButton and add a onPressed property
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: EdgeInsets.all(30.0),
+                  child: Icon(Icons.arrow_right_alt_rounded, size: 50.0),
                 ),
               ),
             ],
