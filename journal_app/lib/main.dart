@@ -31,23 +31,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
-  }
+  var currentPage = 0;
 }
 
 class MyHomePage extends StatefulWidget {
@@ -56,22 +40,39 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
     Widget page;
-      switch (selectedIndex) {
+      switch (appState.currentPage) {
       case 0:
-        page = GeneratorPage();
+        page = OpeningPage(appState: appState);
         break;
       case 1:
         page = FavoritesPage();
         break;
       default:
-      throw UnimplementedError('no widget for $selectedIndex');
+      throw UnimplementedError('no widget for $appState.currentPage');
     }
 
+    return Scaffold(
+      body: page,
+    );
+  }
+}
+
+class OpeningPage extends StatelessWidget {
+  const OpeningPage({
+    super.key,
+    required this.appState,
+  });
+
+  final MyAppState appState;
+
+  @override
+  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         double size = constraints.maxHeight * 0.11;
@@ -102,15 +103,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
                 ),
               ),
-
-              //make this an IconButton and add a onPressed property
+    
               Align(
                 alignment: Alignment.bottomRight,
                 child: Padding(
                   padding: EdgeInsets.all(30.0),
-                  child: IconButton(icon: Icon(Icons.arrow_right_alt_rounded), iconSize: 50.0, onPressed:() {
-                    selectedIndex = 1;
-                  },),
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_right_alt_rounded), 
+                    iconSize: 50.0, 
+                    onPressed:() {appState.currentPage = 1;},
+                  ),
                 ),
               ),
             ],
