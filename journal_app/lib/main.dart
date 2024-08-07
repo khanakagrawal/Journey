@@ -108,7 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: Alignment.bottomRight,
                 child: Padding(
                   padding: EdgeInsets.all(30.0),
-                  child: Icon(Icons.arrow_right_alt_rounded, size: 50.0),
+                  child: IconButton(icon: Icon(Icons.arrow_right_alt_rounded), iconSize: 50.0, onPressed:() {
+                    selectedIndex = 1;
+                  },),
                 ),
               ),
             ],
