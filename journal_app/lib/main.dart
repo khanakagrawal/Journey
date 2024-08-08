@@ -50,9 +50,6 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         page = OpeningPage(appState: appState);
         break;
-      case 1:
-        page = FavoritesPage();
-        break;
       default:
       throw UnimplementedError('no widget for $appState.currentPage');
     }
@@ -87,7 +84,7 @@ class OpeningPage extends StatelessWidget {
                     blendMode: BlendMode.srcIn,
                     shaderCallback: (Rect bounds) {
                       return LinearGradient(
-                        colors: [Color(0xFFf08080), Color(0xfffec89a), Color(0xffffc8dd), Color(0xFFffef9f), Color(0xffB9FBC0), Color(0xFF8EECF5), Color(0xffCFBAF0)], // Replace with your desired colors
+                        colors: [Color(0xFFEF9696), Color(0xffFBB173), Color(0xffffc8dd), Color(0xffC7F3BC), Color(0xFFBBF2F8), Color(0xffDFCBFD)], // Replace with your desired colors
                         begin: Alignment.topLeft,
                         end: Alignment.bottomLeft,
                       ).createShader(bounds);
@@ -124,78 +121,78 @@ class OpeningPage extends StatelessWidget {
 }
 
 
-class GeneratorPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
+// class GeneratorPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     var appState = context.watch<MyAppState>();
+//     var pair = appState.current;
 
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
+//     IconData icon;
+//     if (appState.favorites.contains(pair)) {
+//       icon = Icons.favorite;
+//     } else {
+//       icon = Icons.favorite_border;
+//     }
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
+//     return Center(
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           BigCard(pair: pair),
+//           SizedBox(height: 10),
+//           Row(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               ElevatedButton.icon(
+//                 onPressed: () {
+//                   appState.toggleFavorite();
+//                 },
+//                 icon: Icon(icon),
+//                 label: Text('Like'),
+//               ),
+//               SizedBox(width: 10),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   appState.getNext();
+//                 },
+//                 child: Text('Next'),
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
-class FavoritesPage extends StatelessWidget {
+// class FavoritesPage extends StatelessWidget {
   
-   @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
+//    @override
+//   Widget build(BuildContext context) {
+//     var appState = context.watch<MyAppState>();
 
-    if (appState.favorites.isEmpty) {
-      return Center(
-        child: Text('No favorites yet.'),
-      );
-    }
+//     if (appState.favorites.isEmpty) {
+//       return Center(
+//         child: Text('No favorites yet.'),
+//       );
+//     }
 
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Text('You have '
-              '${appState.favorites.length} favorites:'),
-        ),
-        for (var pair in appState.favorites)
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
-          ),
-      ],
-    );
-  }
-}
+//     return ListView(
+//       children: [
+//         Padding(
+//           padding: const EdgeInsets.all(20),
+//           child: Text('You have '
+//               '${appState.favorites.length} favorites:'),
+//         ),
+//         for (var pair in appState.favorites)
+//           ListTile(
+//             leading: Icon(Icons.favorite),
+//             title: Text(pair.asLowerCase),
+//           ),
+//       ],
+//     );
+//   }
+// }
 
 
 class BigCard extends StatelessWidget {
