@@ -50,6 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         page = OpeningPage(appState: appState);
         break;
+      case 1:
+        page = JournalingPage();
       default:
       throw UnimplementedError('no widget for $appState.currentPage');
     }
@@ -118,6 +120,31 @@ class OpeningPage extends StatelessWidget {
       }
     );
   }
+}
+
+class JournalingPage extends StatefulWidget {
+  @override
+  State<JournalingPage> createState() => _JournalingPageState();
+}
+
+class _JournalingPageState extends State<JournalingPage> {
+  // const _JournalingPageState({
+  //   super.key,
+  //   required this.appState,
+  // });
+
+  // final MyAppState appState;
+
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var emotion = null;
+    var text = null;
+
+    return Scaffold();
+  }
+  
+
 }
 
 
