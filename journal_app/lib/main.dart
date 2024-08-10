@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = OpeningPage(appState: appState);
         break;
       case 1:
+        //TODO: this isn't working fix it
         page = JournalingPage();
       default:
       throw UnimplementedError('no widget for $appState.currentPage');
@@ -138,10 +139,30 @@ class _JournalingPageState extends State<JournalingPage> {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    var emotion = null;
+    List<bool> selectedEmotions = List<bool>.filled(7, false);
+    List<Icon> icons = [Icon(Icons.hourglass_bottom_rounded), Icon(Icons.camera), Icon(Icons.sick), Icon(Icons.anchor), Icon(Icons.account_box), Icon(Icons.favorite), Icon(Icons.face)];
     var text = null;
 
-    return Scaffold();
+    return Scaffold(
+      body: Column (
+        children: [
+          Padding(padding: EdgeInsets.all(20.0)),
+          Row(
+            children: icons.asMap().entries.map((entry) {
+              int index = entry.key;
+              Icon icon = entry.value;
+              return IconButton(
+                icon: icon,
+                onPressed: () {
+                  setState(() {
+                    selectedEmotions[index] = !selectedEmotions[index];
+                  });
+                },
+              );
+            }).toList(),
+          )
+        ],)
+    );
   }
   
 
