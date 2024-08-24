@@ -31,8 +31,16 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
-  var currentPage = 0;
+  var _currentPage = 0;
+
+  int get currentPage => _currentPage;
+
+  set currentPage(int newPage) {
+    _currentPage = newPage;
+    notifyListeners();  // This will notify the listeners to rebuild the UI
+  }
 }
+
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -53,7 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         //TODO: this isn't working fix it
         page = JournalingPage();
+        //page = Placeholder();
       default:
+  
       throw UnimplementedError('no widget for $appState.currentPage');
     }
 
@@ -111,7 +121,9 @@ class OpeningPage extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(Icons.arrow_right_alt_rounded), 
                     iconSize: 50.0, 
-                    onPressed:() {appState.currentPage = 1;},
+                    onPressed: () {
+                      appState.currentPage = 1; // This will trigger a rebuild
+                    },
                   ),
                 ),
               ),
