@@ -60,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 1:
         //TODO: this isn't working fix it
-        // page = JournalingPage();
-        page = Placeholder();
+        page = JournalingPage();
+        //page = Placeholder();
       default:
   
       throw UnimplementedError('no widget for $appState.currentPage');
