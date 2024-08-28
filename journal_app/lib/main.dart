@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp());
@@ -59,9 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = OpeningPage(appState: appState);
         break;
       case 1:
-        //TODO: this isn't working fix it
         page = JournalingPage();
-        //page = Placeholder();
       default:
   
       throw UnimplementedError('no widget for $appState.currentPage');
@@ -85,7 +84,7 @@ class OpeningPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double size = constraints.maxHeight * 0.11;
+        double size = constraints.maxHeight * 0.105;
         
         return Scaffold(
           body: Stack(
@@ -106,7 +105,7 @@ class OpeningPage extends StatelessWidget {
                       'Hey, how are you doing today?',
                       initialDelay: const Duration(seconds: 1),
                       characterDelay: const Duration(milliseconds: 60),
-                      style: TextStyle(
+                      style: GoogleFonts.poppins(
                         fontSize: size,
                       ),
                     ),
@@ -122,7 +121,7 @@ class OpeningPage extends StatelessWidget {
                     icon: Icon(Icons.arrow_right_alt_rounded), 
                     iconSize: 50.0, 
                     onPressed: () {
-                      appState.currentPage = 1; // This will trigger a rebuild
+                      appState.currentPage = 1; 
                     },
                   ),
                 ),
@@ -151,29 +150,57 @@ class _JournalingPageState extends State<JournalingPage> {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    List<bool> selectedEmotions = List<bool>.filled(7, false);
+    
+    //TOOD: maybe make another list of icons w/o outline for when not selected
     List<Icon> icons = [Icon(Icons.hourglass_bottom_rounded), Icon(Icons.camera), Icon(Icons.sick), Icon(Icons.anchor), Icon(Icons.account_box), Icon(Icons.favorite), Icon(Icons.face)];
+    
+    //state
+    List<bool> selectedEmotions = List<bool>.filled(7, false);
     var text = null;
 
-    return Scaffold(
-      body: Column (
-        children: [
-          Padding(padding: EdgeInsets.all(20.0)),
-          Row(
-            children: icons.asMap().entries.map((entry) {
-              int index = entry.key;
-              Icon icon = entry.value;
-              return IconButton(
-                icon: icon,
-                onPressed: () {
-                  setState(() {
-                    selectedEmotions[index] = !selectedEmotions[index];
-                  });
-                },
-              );
-            }).toList(),
+    //TODO: add a cross button to close, and will have to
+    //add logic to be able to come back to journal page from calender page
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Scaffold(
+          body: Center(
+            child: Column (
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(padding: EdgeInsets.only(top: constraints.maxHeight * 0.1)),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text('Select upto 3 emotions that describe your day today.', 
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyle(fontSize: 25.0, color: Color.fromARGB(255, 123, 123, 123))
+                    )
+                  ),
+                ),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 5.0, // Horizontal spacing between children
+                  runSpacing: 6.0, // Vertical spacing between rows
+      
+                  children: icons.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    Icon icon = entry.value;
+
+                    return IconButton(
+                      icon: icon,
+                      iconSize: (constraints.maxWidth / 5),
+                      onPressed: () {
+                        setState(() {
+                          selectedEmotions[index] = !selectedEmotions[index];
+                        });
+                      },
+                    );
+                  }).toList(),
+                )
+              ],),
           )
-        ],)
+        );
+      }
     );
   }
   
