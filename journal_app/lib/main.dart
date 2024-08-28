@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
         title: 'Journey',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber, secondary: Colors.blueGrey),
         ),
         home: MyHomePage(),
       ),
@@ -234,6 +233,16 @@ class _JournalingPageState extends State<JournalingPage> {
                       maxLines: 8, // Increase the size by setting maxLines
                     ),
                   ),
+                  Padding(padding: EdgeInsets.all(15.0)),
+                  ElevatedButton(onPressed: () {
+                      appState.currentPage = 0; 
+                    }, 
+                    style: ButtonStyle(
+                      shadowColor: MaterialStateColor.resolveWith((states) => Color.fromARGB(255, 188, 187, 187)), 
+                      backgroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0))),
+                    child: Text('Submit', style: TextStyle(fontSize: 25.0, color: Color.fromARGB(255, 123, 123, 123)) )
+                  )
                 ],
               ),
             ),
