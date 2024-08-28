@@ -84,7 +84,7 @@ class OpeningPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double size = constraints.maxHeight * 0.105;
+        double size = constraints.maxHeight * 0.1;
         
         return Scaffold(
           body: Stack(
@@ -163,41 +163,80 @@ class _JournalingPageState extends State<JournalingPage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          body: Center(
-            child: Column (
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(padding: EdgeInsets.only(top: constraints.maxHeight * 0.1)),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text('Select upto 3 emotions that describe your day today.', 
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(fontSize: 25.0, color: Color.fromARGB(255, 123, 123, 123))
-                    )
+          body: SingleChildScrollView(
+            child: Center(
+              child: Column (
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(padding: EdgeInsets.only(top: constraints.maxHeight * 0.1)),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text('Select upto 3 emotions that describe your day today.', 
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: 25.0, color: Color.fromARGB(255, 123, 123, 123))
+                      )
+                    ),
                   ),
-                ),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 5.0, // Horizontal spacing between children
-                  runSpacing: 6.0, // Vertical spacing between rows
-      
-                  children: icons.asMap().entries.map((entry) {
-                    int index = entry.key;
-                    Icon icon = entry.value;
-
-                    return IconButton(
-                      icon: icon,
-                      iconSize: (constraints.maxWidth / 5),
-                      onPressed: () {
-                        setState(() {
-                          selectedEmotions[index] = !selectedEmotions[index];
-                        });
-                      },
-                    );
-                  }).toList(),
-                )
-              ],),
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 5.0, // Horizontal spacing between children
+                    runSpacing: 6.0, // Vertical spacing between rows
+                  
+                    children: icons.asMap().entries.map((entry) {
+                      int index = entry.key;
+                      Icon icon = entry.value;
+            
+                      return IconButton(
+                        icon: icon,
+                        iconSize: (constraints.maxWidth / 5.5),
+                        onPressed: () {
+                          setState(() {
+                            selectedEmotions[index] = !selectedEmotions[index];
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: constraints.maxHeight * 0.07)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+                    child: Text('Anything you want to make note of? (optional)', 
+                      // textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: 22.0, color: Color.fromARGB(255, 123, 123, 123))
+                      )
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 25.0, right: 25.0),
+                    child: TextField(
+                      style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 18.0, color: Color.fromARGB(255, 123, 123, 123))),
+                      decoration: InputDecoration(
+                        // Unfocused state border
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 188, 187, 187), 
+                            width: 2, 
+                          ),
+                        ),
+                        // Focused state border
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 188, 187, 187), // Set the border color for the focused state
+                            width: 2.5, // Set the border width
+                          ),
+                        ),
+                        hintText: 'Enter thoughts, feelings, events, etc. here',
+                      ),
+                      maxLines: 8, // Increase the size by setting maxLines
+                    ),
+                  ),
+                ],
+              ),
+            ),
           )
         );
       }
