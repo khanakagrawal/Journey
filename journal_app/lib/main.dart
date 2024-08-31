@@ -120,6 +120,8 @@ class OpeningPage extends StatelessWidget {
                     icon: Icon(Icons.arrow_right_alt_rounded), 
                     iconSize: 50.0, 
                     onPressed: () {
+                      //TODO: need to add conditional here for if the entry 
+                      //for the day has already been logged
                       appState.currentPage = 1; 
                     },
                   ),
@@ -155,7 +157,6 @@ class _JournalingPageState extends State<JournalingPage> {
     
     //state
     List<bool> selectedEmotions = List<bool>.filled(7, false);
-    var text = null;
 
     //TODO: add a cross button to close, and will have to
     //add logic to be able to come back to journal page from calender page
@@ -224,17 +225,18 @@ class _JournalingPageState extends State<JournalingPage> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           borderSide: BorderSide(
-                            color: Color.fromARGB(255, 188, 187, 187), // Set the border color for the focused state
-                            width: 2.5, // Set the border width
+                            color: Color.fromARGB(255, 188, 187, 187), 
+                            width: 2.5, 
                           ),
                         ),
                         hintText: 'Enter thoughts, feelings, events, etc. here',
                       ),
-                      maxLines: 8, // Increase the size by setting maxLines
+                      maxLines: 8, 
                     ),
                   ),
                   Padding(padding: EdgeInsets.all(15.0)),
                   ElevatedButton(onPressed: () {
+                      //TODO: update for backend
                       appState.currentPage = 0; 
                     }, 
                     style: ButtonStyle(
@@ -251,9 +253,8 @@ class _JournalingPageState extends State<JournalingPage> {
       }
     );
   }
-  
-
 }
+
 
 
 // class GeneratorPage extends StatelessWidget {
