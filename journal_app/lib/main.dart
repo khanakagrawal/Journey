@@ -78,60 +78,72 @@ class OpeningPage extends StatelessWidget {
 
   final MyAppState appState;
 
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        double size = constraints.maxHeight * 0.099;
-        
-        return Scaffold(
-          body: Stack(
-            children: [
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 35.0, right: 30.0, bottom: 50.0),
-                  child: ShaderMask(
-                    blendMode: BlendMode.srcIn,
-                    shaderCallback: (Rect bounds) {
-                      return LinearGradient(
-                        colors: [Color(0xFFEF9696), Color(0xffFBB173), Color(0xffffc8dd), Color(0xffC7F3BC), Color(0xFFBBF2F8), Color(0xffDFCBFD)], // Replace with your desired colors
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomLeft,
-                      ).createShader(bounds);
-                    },
-                    child: TextAnimator(
-                      'Hey, how are you doing today?',
-                      initialDelay: const Duration(seconds: 1),
-                      characterDelay: const Duration(milliseconds: 60),
-                      style: GoogleFonts.poppins(
-                        fontSize: size,
-                      ),
-                    ),
-                  )
+@override
+Widget build(BuildContext context) {
+  // Get the size of the screen
+  final size = MediaQuery.of(context).size;
+  
+  // Determine the text size as a percentage of the screen height
+  final double textSize = size.height * 0.1;
+
+  // Define the padding values
+  final double horizontalPadding = size.width * 0.05; // 5% of screen width
+  final double bottomPadding = size.height * 0.05; // 5% of screen height
+
+  return Scaffold(
+    body: Stack(
+      children: [
+        Center(
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: horizontalPadding, 
+              right: horizontalPadding, 
+              bottom: bottomPadding,
+            ),
+            child: ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (Rect bounds) {
+                return LinearGradient(
+                  colors: [Color(0xFFEF9696),
+                  Color(0xffFBB173),
+                  Color(0xffffc8dd),
+                  Color(0xffC7F3BC),
+                  Color(0xFFBBF2F8),
+                  Color(0xffDFCBFD)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomLeft,
+                ).createShader(bounds);
+              },
+              child: TextAnimator(
+                'Hey, how are you doing today?',
+                initialDelay: const Duration(seconds: 1),
+                characterDelay: const Duration(milliseconds: 60),
+                style: GoogleFonts.poppins(
+                  fontSize: textSize,
                 ),
               ),
-    
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: EdgeInsets.all(30.0),
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_right_alt_rounded), 
-                    iconSize: 50.0, 
-                    onPressed: () {
-                      //TODO: need to add conditional here for if the entry 
-                      //for the day has already been logged
-                      appState.currentPage = 1; 
-                    },
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        );
-      }
-    );
-  }
+        ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: EdgeInsets.all(30.0),
+            child: IconButton(
+              icon: Icon(Icons.arrow_right_alt_rounded), 
+              iconSize: 50.0, 
+              onPressed: () {
+                //TODO: need to add conditional here for if the entry 
+                //for the day has already been logged
+                appState.currentPage = 1; 
+              },
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
 }
 
 class JournalingPage extends StatefulWidget {
@@ -173,7 +185,7 @@ class _JournalingPageState extends State<JournalingPage> {
                     child: Text('Select upto 3 emotions that describe your day today.', 
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
-                        textStyle: TextStyle(fontSize: 25.0, color: Color.fromARGB(255, 123, 123, 123))
+                        textStyle: TextStyle(fontSize: 15.0, color: Color.fromARGB(255, 123, 123, 123))
                       )
                     ),
                   ),
@@ -203,14 +215,14 @@ class _JournalingPageState extends State<JournalingPage> {
                     child: Text('Anything you want to make note of? (optional)', 
                       // textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
-                        textStyle: TextStyle(fontSize: 22.0, color: Color.fromARGB(255, 123, 123, 123))
+                        textStyle: TextStyle(fontSize: 15.0, color: Color.fromARGB(255, 123, 123, 123))
                       )
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0, left: 25.0, right: 25.0),
                     child: TextField(
-                      style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 18.0, color: Color.fromARGB(255, 123, 123, 123))),
+                      style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 15.0, color: Color.fromARGB(255, 123, 123, 123))),
                       decoration: InputDecoration(
                         // Unfocused state border
                         enabledBorder: OutlineInputBorder(
@@ -228,12 +240,47 @@ class _JournalingPageState extends State<JournalingPage> {
                             width: 2.5, 
                           ),
                         ),
-                        hintText: 'Enter thoughts, feelings, events, etc. here',
                       ),
                       maxLines: 8, 
                     ),
                   ),
                   Padding(padding: EdgeInsets.all(15.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+                    child: Text('What are some things you are grateful for today? (optional)', 
+                      // textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(fontSize: 15.0, color: Color.fromARGB(255, 123, 123, 123))
+                      )
+                    ),
+                  ),
+                  // TODO: in the future, make it so that each things can be a seperate list entry
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 25.0, right: 25.0),
+                    child: TextField(
+                      style: GoogleFonts.poppins(textStyle: TextStyle(fontSize: 15.0, color: Color.fromARGB(255, 123, 123, 123))),
+                      decoration: InputDecoration(
+                        // Unfocused state border
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 188, 187, 187), 
+                            width: 2, 
+                          ),
+                        ),
+                        // Focused state border
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 188, 187, 187), 
+                            width: 2.5, 
+                          ),
+                        ),
+                      ),
+                      maxLines: 1, 
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: constraints.maxHeight * 0.04)),
                   ElevatedButton(onPressed: () {
                       //TODO: update for backend
                       appState.currentPage = 0; 
@@ -242,7 +289,7 @@ class _JournalingPageState extends State<JournalingPage> {
                       shadowColor: WidgetStateColor.resolveWith((states) => Color.fromARGB(255, 188, 187, 187)), 
                       backgroundColor: WidgetStateColor.resolveWith((states) => Colors.white),
                       padding: WidgetStateProperty.all(EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0))),
-                    child: Text('Submit', style: TextStyle(fontSize: 25.0, color: Color.fromARGB(255, 123, 123, 123)) )
+                    child: Text('Submit', style: TextStyle(fontSize: 15.0, color: Color.fromARGB(255, 123, 123, 123)) )
                   )
                 ],
               ),
