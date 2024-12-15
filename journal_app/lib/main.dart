@@ -1,4 +1,4 @@
-import 'dart:html';
+// import 'dart:html';
 import 'dart:ui';
 
 import 'package:english_words/english_words.dart';
@@ -57,7 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
       switch (appState.currentPage) {
       case 0:
         page = OpeningPage(appState: appState);
-        break;
       case 1:
         page = JournalingPage();
       default:
@@ -83,7 +82,7 @@ class OpeningPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double size = constraints.maxHeight * 0.1;
+        double size = constraints.maxHeight * 0.099;
         
         return Scaffold(
           body: Stack(
@@ -240,9 +239,9 @@ class _JournalingPageState extends State<JournalingPage> {
                       appState.currentPage = 0; 
                     }, 
                     style: ButtonStyle(
-                      shadowColor: MaterialStateColor.resolveWith((states) => Color.fromARGB(255, 188, 187, 187)), 
-                      backgroundColor: MaterialStateColor.resolveWith((states) => Colors.white),
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0))),
+                      shadowColor: WidgetStateColor.resolveWith((states) => Color.fromARGB(255, 188, 187, 187)), 
+                      backgroundColor: WidgetStateColor.resolveWith((states) => Colors.white),
+                      padding: WidgetStateProperty.all(EdgeInsets.only(left: 30.0, right: 30.0, top: 15.0, bottom: 15.0))),
                     child: Text('Submit', style: TextStyle(fontSize: 25.0, color: Color.fromARGB(255, 123, 123, 123)) )
                   )
                 ],
