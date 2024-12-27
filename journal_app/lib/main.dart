@@ -1,9 +1,7 @@
 // import 'dart:html';
-import 'dart:ui';
 
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,9 +54,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
       switch (appState.currentPage) {
       case 0:
-        page = OpeningPage(appState: appState);
+        page = OpeningPage();
       case 1:
         page = JournalingPage();
+      case 2:
+        page = CalendarPage();
       default:
   
       throw UnimplementedError('no widget for $appState.currentPage');
@@ -71,15 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class OpeningPage extends StatelessWidget {
-  const OpeningPage({
-    super.key,
-    required this.appState,
-  });
-
-  final MyAppState appState;
-
 @override
 Widget build(BuildContext context) {
+  var appState = context.watch<MyAppState>();
+
   // Get the size of the screen
   final size = MediaQuery.of(context).size;
   
@@ -283,7 +278,7 @@ class _JournalingPageState extends State<JournalingPage> {
                   Padding(padding: EdgeInsets.only(top: constraints.maxHeight * 0.04)),
                   ElevatedButton(onPressed: () {
                       //TODO: update for backend
-                      appState.currentPage = 0; 
+                      appState.currentPage = 2; 
                     }, 
                     style: ButtonStyle(
                       shadowColor: WidgetStateColor.resolveWith((states) => Color.fromARGB(255, 188, 187, 187)), 
@@ -298,6 +293,22 @@ class _JournalingPageState extends State<JournalingPage> {
         );
       }
     );
+  }
+}
+
+class CalendarPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    return CalendarDatePicker(
+          initialDate: DateTime(2024, 11, 10),
+          firstDate: DateTime(2024, 11, 10),
+          lastDate: DateTime(2025, 1, 10),
+          onDateChanged: (DateTime date) {
+            // TODO: change this to show the popup that allows user to see entry for that day and edit it
+          },
+      );
   }
 }
 
