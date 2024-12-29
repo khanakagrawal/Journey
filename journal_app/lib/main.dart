@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
+import 'package:intl/intl.dart'; 
+
 
 void main() {
   runApp(MyApp());
@@ -301,17 +304,78 @@ class CalendarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
-    return CalendarDatePicker(
-          initialDate: DateTime(2024, 11, 10),
-          firstDate: DateTime(2024, 11, 10),
-          lastDate: DateTime(2025, 1, 10),
-          onDateChanged: (DateTime date) {
-            // TODO: change this to show the popup that allows user to see entry for that day and edit it
+    return PagedVerticalCalendar(initialDate: DateTime(2024, 11, 10),
+          // TODO: update this with database
+          minDate: DateTime(2024, 11, 10),
+          maxDate: DateTime(2025, 1, 10),
+          onDayPressed: (value) {
+            // TODO: update this to show popup of the entry that day and allow edit  
           },
-      );
+          monthBuilder: (context, month, year) {
+            return Container(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  '$getMonthName(month) $year',
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    color: Color.fromARGB(255, 123, 123, 123),
+                  ),
+                ),
+              ),
+            );
+          },
+          dayBuilder: (context, date) {
+            int day = date.day;
+            return Container(
+              padding: EdgeInsets.all(2.0),
+              child: Center(
+                child: Column(
+                  children: [Text(
+                    '$day',
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Color.fromARGB(255, 123, 123, 123),
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 0.5)),
+                  Container(
+                    width: 2.0,
+                    height: 2.0,
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      shape: BoxShape.circle,
+                    ),
+                  )
+                  ],
+                ),
+              )
+            );
+          },
+    );
+    // return CalendarDatePicker(
+    //       initialDate: DateTime(2024, 11, 10),
+    //       firstDate: DateTime(2024, 11, 10),
+    //       lastDate: DateTime(2025, 1, 10),
+    //       onDateChanged: (DateTime date) {
+    //       },
+    //   );
   }
 }
 
+
+String getMonthName(int month) {
+  const List<String> monthNames = [
+    '', 'January', 'February', 'March', 'April', 'May', 'June', 
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  
+  if (month < 1 || month > 12) {
+    throw ArgumentError('Month must be between 1 and 12');
+  }
+  
+  return monthNames[month];
+}
 
 
 // class GeneratorPage extends StatelessWidget {
