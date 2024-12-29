@@ -312,11 +312,12 @@ class CalendarPage extends StatelessWidget {
             // TODO: update this to show popup of the entry that day and allow edit  
           },
           monthBuilder: (context, month, year) {
+            String monthName = getMonthName(month);
             return Container(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(top: 9.5, bottom: 8.0),
               child: Center(
                 child: Text(
-                  '$getMonthName(month) $year',
+                  '$monthName $year',
                   style: TextStyle(
                     fontSize: 15.0,
                     color: Color.fromARGB(255, 123, 123, 123),
@@ -338,13 +339,16 @@ class CalendarPage extends StatelessWidget {
                       color: Color.fromARGB(255, 123, 123, 123),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.only(top: 0.5)),
+                  Padding(padding: EdgeInsets.only(top: 0.9)),
                   Container(
-                    width: 2.0,
-                    height: 2.0,
+                    width: 15.0,
+                    height: 15.0,
                     decoration: BoxDecoration(
-                      color: Colors.amber,
                       shape: BoxShape.circle,
+                      gradient: SweepGradient(
+                        colors: [Colors.blue, Colors.amber],
+                        center: Alignment.center,
+                      ),
                     ),
                   )
                   ],
