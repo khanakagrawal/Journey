@@ -7,6 +7,7 @@ import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
 import 'package:intl/intl.dart'; 
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 
 void main() {
@@ -310,6 +311,54 @@ class CalendarPage extends StatelessWidget {
           maxDate: DateTime(2025, 1, 10),
           onDayPressed: (value) {
             // TODO: update this to show popup of the entry that day and allow edit  
+            showModalBottomSheet(
+              context: context, 
+              isScrollControlled: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+              ),
+              builder: (BuildContext context) {
+                return Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  padding: EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+                  ),
+                  child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {}, 
+                          icon: Icon(
+                            PhosphorIcons.pencilSimple,
+                            size: 32.0,
+                          )
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.close),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      'This is a custom dialog box.',
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                  ),
+                  // Add more widgets here
+                ],
+              ),
+                );
+              }
+            );
           },
           monthBuilder: (context, month, year) {
             String monthName = getMonthName(month);
@@ -345,9 +394,8 @@ class CalendarPage extends StatelessWidget {
                     height: 15.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: SweepGradient(
+                      gradient: LinearGradient(
                         colors: [Colors.blue, Colors.amber],
-                        center: Alignment.center,
                       ),
                     ),
                   )
@@ -357,13 +405,6 @@ class CalendarPage extends StatelessWidget {
             );
           },
     );
-    // return CalendarDatePicker(
-    //       initialDate: DateTime(2024, 11, 10),
-    //       firstDate: DateTime(2024, 11, 10),
-    //       lastDate: DateTime(2025, 1, 10),
-    //       onDateChanged: (DateTime date) {
-    //       },
-    //   );
   }
 }
 
